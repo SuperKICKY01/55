@@ -1,81 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISSION 5/5 - HOME</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MISSION 5/5 - Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      font-family: 'Orbitron', sans-serif;
-      background-image: url('https://images.unsplash.com/photo-1607083208903-7596f3ee19fc?auto=format&fit=crop&w=1400&q=80');
-      background-size: cover;
-      background-position: center;
+      background: linear-gradient(to top, #000000 60%, #1f1f1f 100%);
       color: white;
+      font-family: 'Montserrat', sans-serif;
       height: 100vh;
+      overflow: hidden;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
-
     .overlay {
-      background: rgba(0, 0, 0, 0.7);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 0;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
       text-align: center;
-      padding: 2rem;
+      padding: 40px;
     }
-
     h1 {
       font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #00ffc3;
+      letter-spacing: 2px;
+      font-weight: 600;
     }
-
     p {
       font-size: 1.2rem;
-      margin-bottom: 2rem;
+      margin: 20px auto;
+      color: #ccc;
+      max-width: 500px;
     }
-
-    .btn {
-      padding: 15px 30px;
-      font-size: 1rem;
-      background-color: #e50914;
+    button {
+      margin-top: 30px;
+      padding: 15px 40px;
+      background: #e50914;
       border: none;
-      border-radius: 5px;
       color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-radius: 6px;
       cursor: pointer;
-      margin: 0 10px;
+      transition: 0.3s ease;
     }
-
-    .btn:hover {
-      background-color: #b00610;
+    button:hover {
+      background: #b20710;
+      transform: scale(1.05);
+    }
+    .fadein {
+      animation: fadeIn 1.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="content">
-    <h1>WELCOME TO MISSION 5/5</h1>
-    <p>ภารกิจลับของคุณเริ่มต้นที่นี่... พร้อมจะค้นหาพี่รหัสแล้วหรือยัง?</p>
-    <button class="btn" onclick="location.href='level1.html'">เริ่มภารกิจ</button>
-    <button class="btn" onclick="alert('ระบบล็อกอินอยู่ระหว่างพัฒนา')">เข้าสู่ระบบ</button>
+  <div class="overlay fadein">
+    <h1>MISSION 5/5</h1>
+    <p>สายลับจาก 4/5... ภารกิจของคุณคือการค้นหาตัวตนของพี่รหัสลับในโลกไซเบอร์</p>
+    <button onclick="location.href='level1.html'">ENTER MISSION</button>
   </div>
 </body>
 </html>
