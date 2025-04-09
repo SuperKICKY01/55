@@ -58,6 +58,7 @@
       opacity: 0;
       transform: translateY(30px);
       animation: fadeInUp 0.6s ease forwards;
+      user-select: none;
     }
 
     .profile:nth-child(1) { animation-delay: 0.2s; }
@@ -77,7 +78,12 @@
       max-width: 180px;
       aspect-ratio: 1 / 1;
       border-radius: 6px;
-      pointer-events: none;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       border: 4px solid transparent;
       transition: transform 0.3s ease, border 0.3s ease;
     }
@@ -87,6 +93,7 @@
       font-size: 1.05rem;
       color: #e5e5e5;
       pointer-events: none;
+      user-select: none;
     }
 
     .gryffindor:hover img { border: 4px solid #ae0001; transform: scale(1.05); }
@@ -142,7 +149,6 @@
       z-index: 10000;
     }
 
-    /* มือถือ */
     @media screen and (max-width: 768px) {
       .profiles {
         grid-template-columns: repeat(2, 1fr);
@@ -172,25 +178,25 @@
     <h1>เลือกบ้านของคุณ</h1>
     <div class="profiles">
       <div class="profile gryffindor" onclick="location.href='gryffindor.html'">
-        <img src="1.jpg" alt="Gryffindor" />
+        <img src="1.jpg" alt="Gryffindor" ondragstart="return false;" oncontextmenu="return false;" />
         <div class="profile-name">🦁 Gryffindor</div>
       </div>
       <div class="profile hufflepuff" onclick="location.href='hufflepuff.html'">
-        <img src="2.jpg" alt="Hufflepuff" />
+        <img src="2.jpg" alt="Hufflepuff" ondragstart="return false;" oncontextmenu="return false;" />
         <div class="profile-name">🦡 Hufflepuff</div>
       </div>
       <div class="profile ravenclaw" onclick="location.href='ravenclaw.html'">
-        <img src="3.jpg" alt="Ravenclaw" />
+        <img src="3.jpg" alt="Ravenclaw" ondragstart="return false;" oncontextmenu="return false;" />
         <div class="profile-name">🦅 Ravenclaw</div>
       </div>
       <div class="profile slytherin" onclick="location.href='slytherin.html'">
-        <img src="4.jpg" alt="Slytherin" />
+        <img src="4.jpg" alt="Slytherin" ondragstart="return false;" oncontextmenu="return false;" />
         <div class="profile-name">🐍 Slytherin</div>
       </div>
     </div>
   </div>
 
-  <!-- Music -->
+  <!-- เพลง -->
   <audio id="bg-audio" preload="auto" loop>
     <source src="music.mp3" type="audio/mpeg" />
   </audio>
@@ -202,7 +208,6 @@
     const toggle = document.getElementById('audio-toggle');
     let isPlaying = false;
 
-    // Mouse trail
     document.addEventListener('mousemove', function(e) {
       const trail = document.createElement('div');
       trail.className = 'trail';
@@ -215,7 +220,6 @@
       setTimeout(() => trail.remove(), 800);
     });
 
-    // Starfall
     setInterval(() => {
       const star = document.createElement('div');
       star.className = 'star';
@@ -224,7 +228,6 @@
       setTimeout(() => star.remove(), 3000);
     }, 300);
 
-    // Music
     function playWithFadeIn() {
       if (isPlaying) return;
       isPlaying = true;
