@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เลือกบ้านของคุณ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pridi:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Pridi', serif;
+      background: linear-gradient(to bottom, #0a0a0a, #141414);
+      color: white;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      z-index: 1;
+      position: relative;
+      padding-top: 80px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      user-select: none;
+    }
+    .profiles {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .profile {
+      width: 160px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+    }
+    .profile img {
+      width: 100%;
+      max-width: 160px;
+      border-radius: 5px;
+      pointer-events: none;
+      border: 4px solid transparent;
+      transition: transform 0.3s ease, border 0.3s ease;
+    }
+    .profile-name {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #e5e5e5;
+      pointer-events: none;
+    }
+
+    /* Hover Effect */
+    .gryffindor:hover img { border: 4px solid #ae0001; transform: scale(1.05); }
+    .hufflepuff:hover img { border: 4px solid #ffdb00; transform: scale(1.05); }
+    .ravenclaw:hover img { border: 4px solid #0e1a40; transform: scale(1.05); }
+    .slytherin:hover img { border: 4px solid #2a623d; transform: scale(1.05); }
+
+    /* Mouse Trail */
+    .trail {
+      position: absolute;
+      width: 16px;
+      height: 4px;
+      border-radius: 2px;
+      pointer-events: none;
+      transform: rotate(45deg);
+      animation: trailFade 0.8s ease-out forwards;
+      z-index: 9999;
+    }
+    @keyframes trailFade {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+
+    /* Starfall */
+    .star {
+      position: fixed;
+      top: -10px;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: fall 3s linear forwards;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      100% { transform: translateY(100vh) scale(0.2); opacity: 0; }
+    }
+
+    #audio-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      z-index: 10000;
+    }
+
+    @media screen and (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      .profile { width: 120px; }
+      .profile img { max-width: 120px; }
+      .profile-name { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>เลือกบ้านของคุณ</h1>
+    <div class="profiles">
+      <div class="profile gryffindor" onclick="location.href='gryffindor.html'">
+        <img src="1.jpg" alt="Gryffindor" />
+        <div class="profile-name">🦁 Gryffindor</div>
+      </div>
+      <div class="profile hufflepuff" onclick="location.href='hufflepuff.html'">
+        <img src="2.jpg" alt="Hufflepuff" />
+        <div class="profile-name">🦡 Hufflepuff</div>
+      </div>
+      <div class="profile ravenclaw" onclick="location.href='ravenclaw.html'">
+        <img src="3.jpg" alt="Ravenclaw" />
+        <div class="profile-name">🦅 Ravenclaw</div>
+      </div>
+      <div class="profile slytherin" onclick="location.href='slytherin.html'">
+        <img src="4.jpg" alt="Slytherin" />
+        <div class="profile-name">🐍 Slytherin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+  <div id="audio-toggle" onclick="toggleAudio()">🔊 เสียงเปิดอยู่</div>
+
+  <script>
+    const colors = ['#f6e58d', '#ffbe76', '#7ed6df', '#e056fd', '#ff7979'];
+    const audio = document.getElementById('bg-audio');
+    const toggle = document.getElementById('audio-toggle');
+    let isPlaying = false;
+
+    // Mouse Trail
+    document.addEventListener('mousemove', function(e) {
+      const trail = document.createElement('div');
+      trail.className = 'trail';
+      trail.style.left = e.pageX + 'px';
+      trail.style.top = e.pageY + 'px';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      trail.style.background = color;
+      trail.style.boxShadow = `0 0 10px ${color}`;
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 800);
+    });
+
+    // Starfall
+    setInterval(() => {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 3000);
+    }, 300);
+
+    // Music
+    function playWithFadeIn() {
+      if (isPlaying) return;
+      isPlaying = true;
+      audio.volume = 0;
+      audio.play().then(() => {
+        let vol = 0;
+        const fade = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            audio.volume = Math.min(vol, 1);
+          } else {
+            clearInterval(fade);
+          }
+        }, 150);
+      });
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        playWithFadeIn();
+        toggle.innerText = '🔊 เสียงเปิดอยู่';
+      } else {
+        audio.pause();
+        toggle.innerText = '🔇 เสียงปิดอยู่';
+        isPlaying = false;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.addEventListener('click', () => {
+        if (!isPlaying && audio.paused) {
+          playWithFadeIn();
+        }
+      }, { once: true });
+    });
+  </script>
+</body>
+</html>
