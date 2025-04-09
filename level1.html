@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MISSION 5/5 - LEVEL 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>LEVEL 1: QUIZ INITIATED</h1>
+    <p>Which language is primarily used to make this website interactive?</p>
+    <button onclick="checkAnswer('HTML')">HTML</button>
+    <button onclick="checkAnswer('CSS')">CSS</button>
+    <button onclick="checkAnswer('JavaScript')">JavaScript</button>
+    <button onclick="checkAnswer('Python')">Python</button>
+    <p id="feedback"></p>
+  </div>
+  <script>
+    function checkAnswer(ans) {
+      if (ans === 'JavaScript') {
+        document.getElementById('feedback').innerText = 'Correct! Proceeding to Level 2...';
+        setTimeout(() => window.location.href = 'level2.html', 1500);
+      } else {
+        document.getElementById('feedback').innerText = 'Wrong answer. Try again!';
+      }
+    }
+  </script>
+</body>
+</html>
