@@ -1,72 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MISSION 5/5 - Welcome</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>MISSION 5/5 - Profile Select</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
-      background: linear-gradient(to top, #000000 60%, #1f1f1f 100%);
+      background-color: #141414;
       color: white;
-      font-family: 'Montserrat', sans-serif;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .overlay {
+      font-family: 'Orbitron', sans-serif;
       text-align: center;
-      padding: 40px;
+      padding-top: 100px;
     }
     h1 {
-      font-size: 3rem;
-      letter-spacing: 2px;
-      font-weight: 600;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+    }
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      margin: 0 auto;
+      background-image: url("image.png"); /* ใส่ชื่อไฟล์ของภาพเธอที่อัป */
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .avatar:hover {
+      transform: scale(1.1);
     }
     p {
-      font-size: 1.2rem;
-      margin: 20px auto;
-      color: #ccc;
-      max-width: 500px;
-    }
-    button {
-      margin-top: 30px;
-      padding: 15px 40px;
-      background: #e50914;
-      border: none;
-      color: white;
+      margin-top: 15px;
       font-size: 1.1rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-    button:hover {
-      background: #b20710;
-      transform: scale(1.05);
-    }
-    .fadein {
-      animation: fadeIn 1.5s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="overlay fadein">
-    <h1>MISSION 5/5</h1>
-    <p>สายลับจาก 4/5... ภารกิจของคุณคือการค้นหาตัวตนของพี่รหัสลับในโลกไซเบอร์</p>
-    <button onclick="location.href='level1.html'">ENTER MISSION</button>
+  <h1>Who’s logging in?</h1>
+  <div onclick="location.href='level1.html'">
+    <div class="avatar"></div>
+    <p>Agent 4/5</p>
   </div>
 </body>
 </html>
