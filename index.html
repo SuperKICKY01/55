@@ -3,15 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MISSION 5/5 - Agent Login</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <title>MISSION 5/5 - HOME</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1607083208903-7596f3ee19fc?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #00ffc3;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      font-size: 1rem;
+      background-color: #e50914;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    .btn:hover {
+      background-color: #b00610;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>WELCOME, AGENT 4/5</h1>
-    <p>Your mission is to decode the identity of your secret sister from 5/5.<br>Are you ready to begin?</p>
-    <button onclick="location.href='level1.html'">START MISSION</button>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>WELCOME TO MISSION 5/5</h1>
+    <p>ภารกิจลับของคุณเริ่มต้นที่นี่... พร้อมจะค้นหาพี่รหัสแล้วหรือยัง?</p>
+    <button class="btn" onclick="location.href='level1.html'">เริ่มภารกิจ</button>
+    <button class="btn" onclick="alert('ระบบล็อกอินอยู่ระหว่างพัฒนา')">เข้าสู่ระบบ</button>
   </div>
 </body>
 </html>
