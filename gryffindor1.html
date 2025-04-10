@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gryffindor Fire Bounce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Kanit', sans-serif;
+      background: radial-gradient(circle at center, #2a0000, #000);
+      overflow: hidden;
+      height: 100%;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-top: 1rem;
+      color: gold;
+      text-shadow: 2px 2px 5px black;
+    }
+    #gameContainer {
+      position: relative;
+      margin: auto;
+      background: rgba(30, 30, 30, 0.9);
+      border: 5px solid;
+      border-radius: 12px;
+      width: 360px;
+      height: 600px;
+      overflow: hidden;
+      z-index: 1;
+      animation: borderColorChange 5s linear infinite;
+    }
+    @keyframes borderColorChange {
+      0% { border-color: #ff4d4d; }
+      25% { border-color: #ff9900; }
+      50% { border-color: #ffcc00; }
+      75% { border-color: #ff6600; }
+      100% { border-color: #ff4d4d; }
+    }
+    #paddle {
+      position: absolute;
+      bottom: 10px;
+      width: 90px;
+      height: 18px;
+      background: linear-gradient(to right, #880000, #220000);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,0,0,0.7);
+      touch-action: none;
+    }
+    .fireball {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background-image: url('assets/img/fire_1f525.png');
+      background-size: cover;
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: white;
+    }
+    #message {
+      text-align: center;
+      color: red;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    #restartBtn, #nextBtn {
+      display: none;
+      margin: 1rem auto;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: gold;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Kanit', sans-serif;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+    .star {
+      position: fixed;
+      top: -10px;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 500px) {
+      #gameContainer {
+        width: 90vw;
+        height: 70vh;
+      }
+      .fireball {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>ภารกิจ: เด้งลูกไฟให้ครบ 20 ครั้ง!</h1>
+  <div id="gameContainer">
+    <div id="score">คะแนน: 0</div>
+    <div id="paddle"></div>
+  </div>
+  <div id="message"></div>
+  <button id="restartBtn">เริ่มใหม่อีกครั้ง</button>
+  <button id="nextBtn" onclick="window.location.href='gryffindor2.html'">ไปหน้าต่อไป</button>
+
+  <audio id="hitSound" src="assets/audio/r1.mp3"></audio>
+  <audio id="bounceSound" src="assets/audio/r2.mp3"></audio>
+
+  <script>
+    const game = document.getElementById("gameContainer");
+    const paddle = document.getElementById("paddle");
+    const scoreDisplay = document.getElementById("score");
+    const message = document.getElementById("message");
+    const restartBtn = document.getElementById("restartBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const hitSound = document.getElementById("hitSound");
+    const bounceSound = document.getElementById("bounceSound");
+
+    let score = 0;
+    let gameRunning = true;
+
+    let fireball = document.createElement("div");
+    fireball.className = "fireball";
+    game.appendChild(fireball);
+
+    let fireX = Math.random() * (game.clientWidth - 50);
+    let fireY = 100;
+    let vx = 2 + Math.random() * 2;
+    let vy = 3;
+
+    function moveFireball() {
+      if (!gameRunning) return;
+
+      fireX += vx;
+      fireY += vy;
+
+      if (fireX <= 0 || fireX >= game.clientWidth - 50) vx *= -1;
+      if (fireY <= 0) vy *= -1;
+
+      fireball.style.left = fireX + "px";
+      fireball.style.top = fireY + "px";
+
+      const fireRect = fireball.getBoundingClientRect();
+      const paddleRect = paddle.getBoundingClientRect();
+
+      if (
+        fireRect.bottom >= paddleRect.top &&
+        fireRect.left + 20 > paddleRect.left &&
+        fireRect.right - 20 < paddleRect.right &&
+        vy > 0
+      ) {
+        vy *= -1;
+        fireY = paddle.offsetTop - 50;
+        score++;
+        scoreDisplay.textContent = "คะแนน: " + score;
+        hitSound.play();
+
+        if (score >= 20) {
+          message.textContent = "🎉 เยี่ยมมาก! คุณผ่านด่านแล้ว!";
+          nextBtn.style.display = "block";
+          gameRunning = false;
+        }
+      }
+
+      if (fireY > game.clientHeight) {
+        message.textContent = "ลูกไฟตกพื้น! เริ่มใหม่อีกครั้ง";
+        restartBtn.style.display = "block";
+        gameRunning = false;
+      }
+
+      if (gameRunning) requestAnimationFrame(moveFireball);
+    }
+
+    let isDragging = false;
+
+    paddle.addEventListener("touchstart", (e) => {
+      isDragging = true;
+      e.preventDefault();
+    });
+
+    paddle.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      const rect = game.getBoundingClientRect();
+      let x = touch.clientX - rect.left - paddle.offsetWidth / 2;
+      x = Math.max(0, Math.min(x, game.clientWidth - paddle.offsetWidth));
+      paddle.style.left = x + "px";
+    });
+
+    paddle.addEventListener("touchend", () => {
+      isDragging = false;
+    });
+
+    game.addEventListener("mousemove", e => {
+      const rect = game.getBoundingClientRect();
+      let x = e.clientX - rect.left;
+      x = Math.max(0, Math.min(x, game.clientWidth - paddle.offsetWidth));
+      paddle.style.left = x + "px";
+    });
+
+    restartBtn.addEventListener("click", () => {
+      score = 0;
+      scoreDisplay.textContent = "คะแนน: 0";
+      message.textContent = "";
+      restartBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      gameRunning = true;
+      fireX = Math.random() * (game.clientWidth - 50);
+      fireY = 100;
+      vx = 2 + Math.random() * 2;
+      vy = 3;
+      moveFireball();
+    });
+
+    function spawnStar() {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 5000);
+    }
+
+    setInterval(spawnStar, 300);
+    moveFireball();
+  </script>
+</body>
+</html>

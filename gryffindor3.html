@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บททดสอบสุดท้าย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        body {
+            background: radial-gradient(ellipse at center, #2c0000, #000);
+            height: 100vh;
+            overflow: hidden;
+            color: gold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #countdown {
+            font-size: 5em;
+            margin-top: 0.5em;
+        }
+        #startBtn {
+            background-color: gold;
+            color: #000;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: gold;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {transform: translateY(-10px); opacity: 1;}
+            100% {transform: translateY(100vh); opacity: 0;}
+        }
+        #musicToggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>บททดสอบสุดท้าย"รอจนเวลาหมดนะน้องนะ"</h1>
+    <div id="countdown"></div>
+    <button id="startBtn">กดเพื่อเริ่ม</button>
+    <div id="musicToggle">🔊 เสียงเปิดอยู่</div>
+    <audio id="bgMusic" loop>
+        <source src="bil.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        const countdownEl = document.getElementById('countdown');
+        const startBtn = document.getElementById('startBtn');
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        let interval;
+        let seconds = 120;
+        let musicPlaying = true;
+        let started = false;
+
+        musicToggle.onclick = () => {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicToggle.innerHTML = "🔇 เสียงปิดอยู่";
+            } else {
+                bgMusic.play();
+                musicToggle.innerHTML = "🔊 เสียงเปิดอยู่";
+            }
+            musicPlaying = !musicPlaying;
+        };
+
+        startBtn.onclick = () => {
+            if (started) return;
+            started = true;
+            bgMusic.play();
+            startBtn.style.display = "none";
+            countdownEl.textContent = seconds;
+
+            interval = setInterval(() => {
+                if (!document.hasFocus()) return;
+                seconds--;
+                countdownEl.textContent = seconds;
+	 	// Trigger Jumpscare at 10 seconds
+    		if (seconds === 10) {
+        		jumpscare();
+    		}
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    countdownEl.textContent = "คำใบ้น้องคือตัวI";
+                }
+            }, 1000);
+
+            for (let i = 0; i < 100; i++) {
+                createStar();
+            }
+        };
+
+        function createStar() {
+            const star = document.createElement("div");
+            star.className = "star";
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * -100 + "px";
+            star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+            document.body.appendChild(star);
+            setTimeout(() => {
+                star.remove();
+                if (started) createStar();
+            }, 3000);
+        }
+	function jumpscare() {
+    const scare = document.createElement('div');
+    scare.style.position = 'fixed';
+    scare.style.top = '0';
+    scare.style.left = '0';
+    scare.style.width = '100vw';
+    scare.style.height = '100vh';
+    scare.style.background = 'rgba(0,0,0,0.9)';
+    scare.style.display = 'flex';
+    scare.style.justifyContent = 'center';
+    scare.style.alignItems = 'center';
+    scare.style.zIndex = '9999';
+    scare.style.fontSize = '5rem';
+    scare.style.color = 'red';
+    scare.style.transition = 'opacity 0.5s ease';
+    scare.innerHTML = '!!!';
+
+    document.body.appendChild(scare);
+
+    const scareSound = new Audio('assets/audio/jump.mp3'); // เสียงตกใจ
+    scareSound.play();
+
+    setTimeout(() => {
+        scare.style.opacity = '0';
+        setTimeout(() => {
+            scare.remove();
+        }, 500);
+    }, 800);
+}
+    </script>
+</body>
+</html>

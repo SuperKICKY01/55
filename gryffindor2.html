@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gryffindor Game 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Kanit', sans-serif;
+      background: linear-gradient(to bottom, #000000, #5a0000);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: gold;
+    }
+
+    #counter {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    #timer {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    #clickArea {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #8b0000, #ff0000);
+      border-radius: 50%;
+      position: absolute;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+      user-select: none;
+      transition: transform 0.1s ease, top 0.3s ease, left 0.3s ease;
+    }
+
+    #clickArea:active {
+      transform: scale(0.95);
+    }
+
+    #restart, #next {
+      margin-top: 2rem;
+      padding: 10px 30px;
+      background: gold;
+      color: black;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ภารกิจกด"วงกลม"ให้ครบจำนวน</h1>
+  <div id="timer">เวลา: 60 วิ</div>
+  <div id="counter">กด: 0 / 50</div>
+
+  <div id="clickArea" onclick="handleClick()"></div>
+
+  <button id="restart" onclick="location.reload()">เริ่มใหม่</button>
+  <button id="next" onclick="goNext()">ไปด่านถัดไป</button>
+
+<script>
+  let count = 0;
+  let timeLeft = 60;
+  let timer = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').innerText = "เวลา: " + timeLeft + " วิ";
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      document.getElementById('clickArea').style.display = 'none';
+      document.getElementById('restart').style.display = 'inline-block';
+    }
+  }, 1000);
+
+  function handleClick() {
+    count++;
+    document.getElementById('counter').innerText = "กด: " + count + " / 50";
+    let sound = new Audio("assets/audio/r2.mp3");
+    sound.play();
+    moveCircle();
+    if (count >= 50) {
+      clearInterval(timer);
+      document.getElementById('clickArea').style.display = 'none';
+      document.getElementById('next').style.display = 'inline-block';
+    }
+  }
+
+  function moveCircle() {
+    const clickArea = document.getElementById('clickArea');
+    const maxX = window.innerWidth - clickArea.clientWidth;
+    const maxY = window.innerHeight - clickArea.clientHeight;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    clickArea.style.left = randomX + 'px';
+    clickArea.style.top = randomY + 'px';
+  }
+
+  function goNext() {
+    window.location.href = atob('Z3J5ZmZpbmRvcjMuaHRtbA=='); // gryffindor3.html
+  }
+
+  // เริ่มต้นตำแหน่งวงกลม
+  moveCircle();
+</script>
+
+</body>
+</html>
